@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script><style type="text/css"></style>
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body class="homepage">
@@ -48,9 +49,10 @@
 						  <input type="text" name="location">
 						</form>
 						<br>
-						<input type="button" value="submit"><br>
+						<input type="button" id="submitButton" value="submit"><br>
 
 					</header>
+					<div id="returnValue">No data</div>
 				</section>
 
 			<!-- Carousel -->
@@ -119,6 +121,35 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+			
+			<script>
+                $("#submitButton").click(function(e){
+                    e.preventDefault();
+                    
+                  items = "12417832";
+                  apiKey = "9xer38k7g6ep93pgs65vpx6c";
+                  myurl = "http://api.walmartlabs.com/v1/items/"+items+"?apiKey="+apiKey+"&format=json";
+                
+                  $.ajax({
+                    url : myurl,
+                    dataType : "jsonp",
+                    success : function(parsed_json) {
+                      console.log(JSON.stringify(parsed_json))
+                      var name = parsed_json['name'];
+                      var price = parsed_json['salePrice'];
+                      var stock = parsed_json['stock'];
+                      everything = "<ul>";
+                      everything += "<li>Name: "+name;
+                      everything += "<li>Price: "+price;
+                      everything += "<li>In stock: "+stock;
+                      everything += "</ul>";
+                      $("#returnValue").html(everything);
+                    }
+                  });
+                  
+                })
+                
+                </script>
 
 	</body>
 </html>
