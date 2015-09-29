@@ -51,12 +51,12 @@
 						<br>
 						<input type="button" id="submitButton" value="submit"><br>
 
-						<h2>
+						<h3>
 							Results:
-						</h2>
-						<p>
+						</h3>
+						<!-- <p>
 							Your item <span id="product"> PRODUCT NAME </span> is currently <span id="inStock"> IN/OUT OF STOCK </span> stock at <span id="location">LOCATION</spam>.
-						</p>
+						</p> -->
 
 					</header>
 					<div id="returnValue">No data</div>
@@ -148,7 +148,7 @@
                       everything = "<ul>";
                       everything += "<li>Name: "+name;
                       everything += "<li>Price: "+price;
-                      everything += "<li>In stock: "+stock;
+                      everything += "<li>Availability: "+stock;
                       everything += "</ul>";
                       $("#returnValue").html(everything);
                     }
