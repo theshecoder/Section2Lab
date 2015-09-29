@@ -1,9 +1,5 @@
 <!DOCTYPE HTML>
-<!--
-	Helios by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
 		<title>Stock Up</title>
@@ -38,25 +34,20 @@
 					<header>
 						<h2>Welcome to <strong>Wal-Mart</strong>.</h2>
 						<p>
-							Please let us know the <strong>product</strong> you are searching for and your <strong>location</strong> to better serve you. 
+							Please let us know the <strong>product UPC</strong> you are searching for and your <strong>location</strong> to better serve you. 
+							<br>
+							If you need help finding your product UPC, follow this link:  <a href="http://yoopsie.com/">Yoopsie</a>
 						</p>
 						<br>
 						<form>
 						  Product:<br>
-						  <input type="text" name="product">
+						  <input type="text" name="product" id="product">
 						  <br>
 						  Location (City, State)<br>
 						  <input type="text" name="location">
 						</form>
 						<br>
 						<input type="button" id="submitButton" value="submit"><br>
-
-						<h3>
-							Results:
-						</h3>
-						<!-- <p>
-							Your item <span id="product"> PRODUCT NAME </span> is currently <span id="inStock"> IN/OUT OF STOCK </span> stock at <span id="location">LOCATION</spam>.
-						</p> -->
 
 					</header>
 					<div id="returnValue">No data</div>
@@ -131,24 +122,26 @@
 			
 			<script>
                 $("#submitButton").click(function(e){
-                    e.preventDefault();
+                  e.preventDefault();
                     
-                  items = "12417832";
                   apiKey = "9xer38k7g6ep93pgs65vpx6c";
-                  myurl = "http://api.walmartlabs.com/v1/items/"+items+"?apiKey="+apiKey+"&format=json";
+                  upc = $("#product").val().trim();
+                //   upc = "028400337274";
+                  myurl = "http://api.walmartlabs.com/v1/items?apiKey="+apiKey+"&upc=" + upc;
                 
                   $.ajax({
                     url : myurl,
                     dataType : "jsonp",
                     success : function(parsed_json) {
                       console.log(JSON.stringify(parsed_json))
+                      parsed_json = parsed_json["items"][0];
                       var name = parsed_json['name'];
                       var price = parsed_json['salePrice'];
                       var stock = parsed_json['stock'];
                       everything = "<ul>";
                       everything += "<li>Name: "+name;
-                      everything += "<li>Price: "+price;
-                      everything += "<li>Availability: "+stock;
+                      everything += "<li>Price: $"+price;
+                      everything += "<li>In stock: "+stock;
                       everything += "</ul>";
                       $("#returnValue").html(everything);
                     }
